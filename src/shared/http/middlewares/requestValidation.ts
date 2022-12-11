@@ -1,7 +1,6 @@
 import { Response, NextFunction, Request } from 'express';
 
 const requestValidation = (schema: any) => async (req: Request, res: Response, next: NextFunction) => {
-  console.log(schema);
   try {
     await schema.validate({
       body: req.body,
@@ -10,7 +9,7 @@ const requestValidation = (schema: any) => async (req: Request, res: Response, n
     });
     return next();
   } catch (err: any) {
-    return res.status(500).json({ type: err.name, message: err.message });
+    return res.status(500).json({ status: err.name, message: err.message });
   }
 };
 

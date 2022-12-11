@@ -1,9 +1,9 @@
 import express from 'express';
 import 'express-async-errors';
-import routes from './config/routes';
+import routes from './shared/http/routes';
 import cors from 'cors';
 import StartDatabase from './database/StartDatabase';
-import ErrorHandler from './config/errors/ErrorHandler';
+import ErrorHandler from './shared/errors/ErrorHandler';
 import dotenv from 'dotenv';
 
 dotenv.config();

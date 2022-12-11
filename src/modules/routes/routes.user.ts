@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import UserController from '../controllers/UserController';
 const userRouter = Router();
-import { userPost } from '../schemas/UserSchemas';
-import { requestValidation } from '../../middlewares/requestValidation';
+import { userPost } from '../../shared/http/schemas/userSchema';
+import { requestValidation } from '../../shared/http/middlewares/requestValidation';
 
 const userController = new UserController();
 

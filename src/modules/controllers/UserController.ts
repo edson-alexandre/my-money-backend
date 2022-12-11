@@ -14,4 +14,11 @@ export default class UserController {
     const users = await userService.create(user);
     return res.json(users);
   }
+
+  async signin(req: Request, res: Response): Promise<Response> {
+    const { email, password } = req.body;
+    const userService = new UserService();
+    const users = await userService.signin(email, password);
+    return res.json(users);
+  }
 }
