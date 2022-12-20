@@ -15,12 +15,11 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cors());
 
 app.listen(process.env.PORT, async () => {
-  const db = new StartDatabase();
   console.log();
   console.log(`*********************************************************************`);
+  const db = new StartDatabase();
   await db.init();
   console.log(`Servidor executando na porta ${process.env.PORT}!`);
-
   app.use(routes); //Iniciando as rotas após conexão com o banco estabelecida
   app.use(ErrorHandler.handler); // Iniciando ErroHandler após rotas
 });

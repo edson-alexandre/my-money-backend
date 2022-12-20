@@ -4,7 +4,10 @@ import jwt from 'jsonwebtoken';
 
 import AppError from '../../errors/AppError';
 const isAuthenticated = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  const [bearer, token] = req.headers.authorization.split(' ');
+  if (!req.headers?.authorization) {
+    throw new AppError('Token jwt não localizado', 401);
+  }
+  const [bearer, token] = req.headers?.authorization?.split(' ');
 
   if (bearer?.toUpperCase() !== 'BEARER') {
     throw new AppError('Token jwt não localizado', 401);
