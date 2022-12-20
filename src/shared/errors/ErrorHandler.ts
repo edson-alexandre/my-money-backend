@@ -5,7 +5,7 @@ import AppError from './AppError';
 export default class ErrorHandler {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public static handler(error: Error, request: Request, response: Response, next: NextFunction): Response {
-    // console.log(error);
+    console.log(error);
     if (error instanceof AppError) {
       return response.status(error.statusCode).json({
         status: 'error',

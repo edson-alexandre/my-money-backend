@@ -19,12 +19,14 @@ export abstract class BaseResourceService<T> implements IService<T> {
   }
 
   async findById(id: any): Promise<T> {
-    const resource = await this.repository.findOne(id);
+    const where = { id };
+    const resource = await this.repository.findOneBy(where);
     return resource;
   }
 
-  async update(id: any, resource: DeepPartial<T>): Promise<DeepPartial<T>> {
-    const resourceExists = await this.repository.findOne(id);
+  async update(id: any, resource: DeepPartial<T>): Promise<T> {
+    const where = { id };
+    const resourceExists = await this.repository.findOneBy(where);
     if (!resourceExists) {
       throw new AppError('Recurso não localizado para atualização', 400);
     }
@@ -32,7 +34,8 @@ export abstract class BaseResourceService<T> implements IService<T> {
   }
 
   async delete(id: any): Promise<void> {
-    const resourceExists = await this.repository.findOne(id);
+    const where = { id };
+    const resourceExists = await this.repository.findOneBy(where);
     if (!resourceExists) {
       throw new AppError('Recurso não localizado para exclusão', 400);
     }
@@ -40,7 +43,8 @@ export abstract class BaseResourceService<T> implements IService<T> {
   }
 
   async softDelete(id: any): Promise<void> {
-    const resourceExists = await this.repository.findOne(id);
+    const where = { id };
+    const resourceExists = await this.repository.findOneBy(where);
     if (!resourceExists) {
       throw new AppError('Recurso não localizado para exclusão', 400);
     }
