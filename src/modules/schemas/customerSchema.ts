@@ -25,7 +25,7 @@ const customerPost = yup.object({
           return true;
         }
       }),
-    contact: yup.string(),
+    contact: yup.string().nullable(true),
     city: yup.string().required('Cidade não informada'),
     state: yup
       .string()
@@ -59,7 +59,7 @@ const customerPut = yup.object({
           return true;
         }
       }),
-    contact: yup.string(),
+    contact: yup.string().nullable(true),
     city: yup.string().required('Cidade não informada'),
     state: yup
       .string()
