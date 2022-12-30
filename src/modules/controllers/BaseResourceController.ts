@@ -1,8 +1,9 @@
+import { CustomerService } from './../services/CustomerService';
 import { Request, Response } from 'express';
 import { IController } from '../interfaces/IController';
 
 export default abstract class BaseResourceController implements IController {
-  service: any; // eslint-disable-line @typescript-eslint/no-explicit-any
+  service: CustomerService; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   public abstract setService(): void;
 
@@ -14,7 +15,9 @@ export default abstract class BaseResourceController implements IController {
 
   public list = async (req: Request, res: Response): Promise<Response> => {
     this.setService();
-    const resource = await this.service.list();
+    const page = req.query.page as string;
+    const perPage = req.query.perPage as string;
+    const resource = await this.service.list(parseInt(page || `${0}`), parseInt(perPage || `${0}`));
     return res.json(resource);
   };
 

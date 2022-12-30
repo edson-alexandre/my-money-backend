@@ -15,8 +15,7 @@ export class UserService {
   async list(): Promise<User[]> {
     const users = await this.repository.find();
     return users.map(user => {
-      // delete user.password;
-      return user;
+      return User.toDTO(user);
     });
   }
 
@@ -27,7 +26,7 @@ export class UserService {
     } catch (error) {
       throw new AppError('Ocorreu um erro ao tentar criptografar a senha. O usuário não foi salvo', 500);
     }
-    return await this.repository.save(user);
+    return await this.repository.save(User.fromDTO(user));
   }
 
   async signin(email: string, password: string): Promise<IPayload> {
