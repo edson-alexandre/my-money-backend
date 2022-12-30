@@ -36,7 +36,7 @@ const supplyerPost = yup.object({
     number: yup.string().required('Número do endereço'),
     details: yup.string(),
     district: yup.string().required('Bairro não informado'),
-    zip: yup.string().required('CEP não informado').max(8, 'Tamnho máximo para o CEP são 8 caracteres'),
+    zip: yup.string().required('CEP não informado').max(8, 'Tamanho máximo para o CEP são 8 caracteres'),
     country: yup.string().required('País não informado'),
   }),
 });
@@ -70,7 +70,7 @@ const supplyerPut = yup.object({
     number: yup.string().required('Número do endereço'),
     details: yup.string(),
     district: yup.string().required('Bairro não informado'),
-    zip: yup.string().required('CEP não informado').max(8, 'Tamnho máximo para o CEP são 8 caracteres'),
+    zip: yup.string().required('CEP não informado'),
     country: yup.string().required('País não informado'),
   }),
 });

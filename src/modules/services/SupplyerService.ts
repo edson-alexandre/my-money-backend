@@ -16,7 +16,6 @@ export class SupplyerService implements IService<Supplyer, SupplyerDTO> {
   }
 
   async list(page: number = 1, perPage: number = 5): Promise<IPaginationReturn<SupplyerDTO[]>> {
-    console.log('Supplyer Service');
     const [resources, total] = await this.repository.findAndCount({
       take: perPage,
       skip: (page - 1) * perPage,
