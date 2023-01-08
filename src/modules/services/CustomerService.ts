@@ -1,3 +1,4 @@
+import { IService } from './../interfaces/IService';
 import { Repository } from 'typeorm';
 import { dataSource } from '../../database/AppDatasource';
 import AppError from '../../shared/errors/AppError';
@@ -5,7 +6,7 @@ import { Customer } from './../model/Customer';
 import { CustomerDTO } from '../dto/CustomerDTO';
 import { IPaginationReturn } from '../interfaces/IPaginationReturn';
 
-export class CustomerService {
+export class CustomerService implements IService<Customer, CustomerDTO> {
   repository: Repository<Customer>;
   constructor() {
     this.repository = dataSource.getRepository(Customer);
@@ -15,10 +16,27 @@ export class CustomerService {
     return await this.repository.save(Customer.fromDTO(resource));
   }
 
-  async list(page: number = 1, perPage: number = 5): Promise<IPaginationReturn<CustomerDTO[]>> {
+  async list(
+    page: number = 1,
+    perPage: number = 5,
+    orderField?: string,
+    orderDirection?: string,
+  ): Promise<IPaginationReturn<CustomerDTO[]>> {
+    const obj = new Customer(null);
+
+    if (orderField && obj[orderField] === undefined) {
+      throw new AppError(`Campo ${orderField} não localizado para ordenação`);
+    }
+    if (orderDirection?.toUpperCase() !== 'DESC' && orderDirection?.toUpperCase() !== 'ASC') {
+      orderDirection === 'ASC';
+    }
+
     const [resources, total] = await this.repository.findAndCount({
       take: perPage,
       skip: (page - 1) * perPage,
+      order: {
+        ...(orderField && { [orderField]: orderDirection }),
+      },
     });
     return {
       page,

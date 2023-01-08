@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { IController } from '../interfaces/IController';
 
 export default abstract class BaseResourceController implements IController {
-  service: CustomerService; // eslint-disable-line @typescript-eslint/no-explicit-any
+  service: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   public abstract setService(): void;
 
@@ -17,7 +17,15 @@ export default abstract class BaseResourceController implements IController {
     this.setService();
     const page = req.query.page as string;
     const perPage = req.query.perPage as string;
-    const resource = await this.service.list(parseInt(page || `${0}`), parseInt(perPage || `${0}`));
+    const orderFiled = req.query.orderField as string;
+    const orderDirection = req.query.orderDirection as string;
+
+    const resource = await this.service.list(
+      parseInt(page || `${0}`),
+      parseInt(perPage || `${0}`),
+      orderFiled,
+      orderDirection,
+    );
     return res.json(resource);
   };
 

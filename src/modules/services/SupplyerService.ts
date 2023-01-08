@@ -15,10 +15,26 @@ export class SupplyerService implements IService<Supplyer, SupplyerDTO> {
     return await this.repository.save(Supplyer.fromDTO(resource));
   }
 
-  async list(page: number = 1, perPage: number = 5): Promise<IPaginationReturn<SupplyerDTO[]>> {
+  async list(
+    page: number = 1,
+    perPage: number = 5,
+    orderField?: string,
+    orderDirection?: string,
+  ): Promise<IPaginationReturn<SupplyerDTO[]>> {
+    const obj = new Supplyer(null);
+
+    if (orderField && obj[orderField] === undefined) {
+      throw new AppError(`Campo ${orderField} não localizado para ordenação`);
+    }
+    if (orderDirection?.toUpperCase() !== 'DESC' && orderDirection?.toUpperCase() !== 'ASC') {
+      orderDirection === 'ASC';
+    }
     const [resources, total] = await this.repository.findAndCount({
       take: perPage,
       skip: (page - 1) * perPage,
+      order: {
+        ...(orderField && { [orderField]: orderDirection }),
+      },
     });
     return {
       page,

@@ -5,6 +5,7 @@ import isAuthenticated from './middlewares/isAuthenticated';
 import supplyerRouter from '../../modules/routes/routes.supplyer';
 import { cepRouter } from '../../modules/routes/routes.cep';
 import customerRouter from '../../modules/routes/routes.customer';
+import accountRouter from '../../modules/routes/routes.account';
 
 const routes = Router();
 
@@ -13,5 +14,6 @@ routes.use('/signIn', signinRouter);
 routes.use('/customers', customerRouter);
 routes.use('/supplyers', supplyerRouter);
 routes.use('/cep', cepRouter);
+routes.use('/accounts', accountRouter);
 
 export default routes;

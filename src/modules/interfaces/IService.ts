@@ -2,13 +2,13 @@ import { DeepPartial } from 'typeorm';
 import { IPaginationReturn } from './IPaginationReturn';
 
 export interface IService<T, D> {
-  create(resource: DeepPartial<T>): Promise<DeepPartial<T>>;
+  create(resource: T): Promise<DeepPartial<T>>;
 
-  list(page: number, perPage: number): Promise<IPaginationReturn<D[]>>;
+  list(page: number, perPage: number, orderField?: string, orderDirection?: string): Promise<IPaginationReturn<D[]>>;
 
-  findById(id: number | string): Promise<D>;
+  findById(id: any): Promise<D>;
 
-  update(id: number | string, resource: DeepPartial<T>): Promise<DeepPartial<T>>;
+  update(id: any, resource: T): Promise<DeepPartial<T>>;
 
-  delete(id: number | string): Promise<void>;
+  delete(id: any): Promise<void>;
 }
